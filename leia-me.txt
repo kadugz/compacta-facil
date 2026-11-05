@@ -1,0 +1,42 @@
+CompactaFacil - compressao e descompressao de arquivos (algoritmo de Huffman)
+
+Compilar:
+  gcc -Wall -Wextra -std=c99 -o compactafacil main.c compactafacil.c
+
+Executar:
+  ./compactafacil        (Linux/Mac)
+  compactafacil.exe      (Windows)
+
+Uso:
+  1 - Comprimir:       informe o caminho do arquivo original.
+                        o arquivo comprimido e salvo com extensao .cfz
+  2 - Descomprimir:    informe o caminho do .cfz e o caminho de saida.
+                        o programa confere o CRC32 do resultado e avisa
+                        se a integridade falhar.
+  3 - Comparar com gzip: comprime o arquivo com o CompactaFacil e com o
+                        gzip do sistema (comando "gzip") e mostra os dois
+                        tamanhos lado a lado. Precisa do gzip no PATH
+                        (disponivel por padrao no Linux/Mac/WSL).
+  4 - Sair
+
+Formato do arquivo .cfz (CFZ2):
+  cabecalho: assinatura "CFZ2" (4 bytes) + modo (1 byte) + tamanho
+  original (8 bytes) + CRC32 do arquivo original (4 bytes).
+  - modo armazenado (1): os bytes originais sao gravados sem codificar.
+  - modo huffman (0): tabela so com os simbolos realmente usados no
+    arquivo (num. de simbolos + pares simbolo/frequencia), seguida dos
+    dados codificados em bits.
+  O programa escolhe automaticamente o modo que gerar o arquivo menor,
+  entao um .cfz nunca cresce mais que ~17 bytes acima do original.
+
+Arquivos de teste em testes/ (cobrem os tres cenarios pedidos no enunciado):
+  unico.txt / repetitivo.txt  -> alta redundancia (poucos simbolos)
+  exemplo_gerado.txt          -> media redundancia (texto em linguagem natural)
+  variado.txt / pequeno.txt   -> baixa redundancia (simbolos quase todos distintos)
+  vazio.txt                   -> caso extremo (0 bytes)
+
+Verificar integridade manualmente (Linux/Mac):
+  cmp arquivo_original arquivo_restaurado
+
+Comparar com gzip manualmente, se preferir nao usar a opcao 3 do menu:
+  gzip -c testes/variado.txt > variado.txt.gz
