@@ -9,10 +9,11 @@ codificacao de Huffman. Trabalho de implementacao da disciplina MCTA028-15
 
 ## Integrantes
 
-- (preencher)
-- (preencher)
-- (preencher)
-- (preencher)
+- Ana Julia Massola Gonçalves
+- Carlos Eduardo Gonçalves Santos
+- Isabella Nascimento Lima 
+- Pedro Henrique Kami Dell’Aringa Riccio
+
 
 ## Compilar
 
